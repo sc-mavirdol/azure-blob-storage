@@ -20,6 +20,12 @@
         "linter": "eslint",
         "strict": true
       }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "projects": {
@@ -74,7 +80,10 @@
           "executor": "@nrwl/web:dev-server",
           "options": {
             "buildTarget": "document-management:build",
-            "hmr": true
+            "hmr": true,
+            "ssl": true,
+            "sslKey": "certificates/localhost.key",
+            "sslCert": "certificates/localhost.crt"
           },
           "configurations": {
             "production": {
@@ -123,6 +132,88 @@
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/document-management-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "document-management-nextjs": {
+      "root": "apps/document-management-nextjs",
+      "sourceRoot": "apps/document-management-nextjs",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/document-management-nextjs",
+            "outputPath": "dist/apps/document-management-nextjs"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "document-management-nextjs:build",
+            "dev": true,
+            "customServerPath": "./server.js"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "document-management-nextjs:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "document-management-nextjs:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/document-management-nextjs"],
+          "options": {
+            "jestConfig": "apps/document-management-nextjs/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/document-management-nextjs/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        }
+      }
+    },
+    "document-management-nextjs-e2e": {
+      "root": "apps/document-management-nextjs-e2e",
+      "sourceRoot": "apps/document-management-nextjs-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/document-management-nextjs-e2e/cypress.json",
+            "tsConfig": "apps/document-management-nextjs-e2e/tsconfig.e2e.json",
+            "devServerTarget": "document-management-nextjs:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "document-management-nextjs:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/document-management-nextjs-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }

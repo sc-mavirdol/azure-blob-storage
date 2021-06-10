@@ -1,3 +1,10 @@
 {
-  "singleQuote": true
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "useTabs": false,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "useEditorConfig": false,
+  "bracketSpacing": false,
+  "proseWrap": "always"
 }
