@@ -8,6 +8,15 @@ import {
   AuthenticatedTemplate,
 } from '@azure/msal-react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#005677',
+    },
+  },
+});
 
 function CustomApp({Component, pageProps}: AppProps) {
   return (
@@ -19,18 +28,20 @@ function CustomApp({Component, pageProps}: AppProps) {
           content='minimum-scale=1, initial-scale=1, width=device-width'
         />
       </Head>
-      <CssBaseline />
-      <AuthProvider
-        clientId={process.env.NEXT_PUBLIC_APP_CLIENT_ID}
-        tenantId={process.env.NEXT_PUBLIC_APP_TENANT_ID}
-      >
-        <AuthenticatedTemplate>
-          <Component {...pageProps} />
-        </AuthenticatedTemplate>
-        <UnauthenticatedTemplate>
-          <UnauthenticatedApp />
-        </UnauthenticatedTemplate>
-      </AuthProvider>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <AuthProvider
+          clientId={process.env.NEXT_PUBLIC_APP_CLIENT_ID}
+          tenantId={process.env.NEXT_PUBLIC_APP_TENANT_ID}
+        >
+          <AuthenticatedTemplate>
+            <Component {...pageProps} />
+          </AuthenticatedTemplate>
+          <UnauthenticatedTemplate>
+            <UnauthenticatedApp />
+          </UnauthenticatedTemplate>
+        </AuthProvider>
+      </ThemeProvider>
     </>
   );
 }
