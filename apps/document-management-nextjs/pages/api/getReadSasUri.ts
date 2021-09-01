@@ -7,17 +7,17 @@ import {
 } from '@azure/storage-blob';
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
-  const sasToken = getContainerSasUri();
-  const uploadUrl = `https://virdolsustaincertblob.blob.core.windows.net?${sasToken}`;
-  return res.status(200).json({uploadUrl});
+  const sasToken = getReadSasUri();
+  const readUrl = `https://virdolsustaincertblob.blob.core.windows.net?${sasToken}`;
+  return res.status(200).json({readUrl});
 }
 
-function getContainerSasUri() {
+function getReadSasUri() {
   const sasOptions: BlobSASSignatureValues = {
     containerName: 'test-container',
-    permissions: ContainerSASPermissions.parse('w'),
+    permissions: ContainerSASPermissions.parse('l'),
     startsOn: new Date(),
-    expiresOn: new Date(new Date().valueOf() + 3600 * 1000 + 5 * 60 * 1000),
+    expiresOn: new Date(new Date().valueOf() + 3600 * 1000 + 1 * 60 * 1000),
   };
   const sharedKeyCredential = new StorageSharedKeyCredential(
     'virdolsustaincertblob',

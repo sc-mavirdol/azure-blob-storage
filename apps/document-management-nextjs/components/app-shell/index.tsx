@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
     },
     content: {
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
     },
   })
 );
@@ -54,7 +54,7 @@ export default function AppShell({children}: AppShellProps) {
                 <Avatar>
                   <AccountCircleIcon />
                 </Avatar>
-                <Box ml={1}>{msalAuth.accounts[0].name}</Box>
+                <Box ml={1}>{msalAuth.accounts[0]?.name}</Box>
               </Box>
             </AuthenticatedTemplate>
           </Toolbar>

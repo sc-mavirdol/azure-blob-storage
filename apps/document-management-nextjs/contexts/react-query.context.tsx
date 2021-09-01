@@ -11,21 +11,21 @@ export default function ReactQueryProvider({
   baseUrl,
   children,
 }: QueryProviderProps) {
-  if (baseUrl === undefined) {
-    throw new Error('react query api base url is not defined');
-  }
+  // if (baseUrl === undefined) {
+  //   throw new Error('react query api base url is not defined');
+  // }
   const queryClient = React.useMemo(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            queryFn: createQueryFn(baseUrl),
+            // queryFn: createQueryFn(baseUrl),
             refetchOnWindowFocus: process.env.NODE_ENV === 'production',
             retry: process.env.NODE_ENV === 'production' ? 3 : false,
           },
         },
       }),
-    [baseUrl]
+    []
   );
 
   return (
